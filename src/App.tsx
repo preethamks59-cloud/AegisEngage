@@ -5,6 +5,7 @@
 import React, { useState } from 'react';
 import Dashboard from './components/Dashboard';
 import AegisDrawer from './components/AegisDrawer';
+import { ThemeProvider } from './context/ThemeContext';
 
 export default function App() {
   const [isDrawerOpen, setDrawerOpen] = useState(false);
@@ -16,14 +17,16 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Dashboard onQuickAction={handleQuickAction} />
-      <AegisDrawer 
-        isOpen={isDrawerOpen} 
-        onClose={() => setDrawerOpen(false)} 
-        initialMessage={triggerMessage} 
-        onMessageProcessed={() => setTriggerMessage(null)}
-      />
-    </div>
+    <ThemeProvider>
+      <div className="min-h-screen bg-slate-50 dark:bg-slate-950 transition-colors duration-300">
+        <Dashboard onQuickAction={handleQuickAction} />
+        <AegisDrawer 
+          isOpen={isDrawerOpen} 
+          onClose={() => setDrawerOpen(false)} 
+          initialMessage={triggerMessage} 
+          onMessageProcessed={() => setTriggerMessage(null)}
+        />
+      </div>
+    </ThemeProvider>
   );
 }
