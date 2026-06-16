@@ -1,0 +1,6 @@
+{
+  "name": "AegisEngage",
+  "description": "Autonomous multi-agent AI digital banking engagement ecosystem.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
