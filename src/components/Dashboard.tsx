@@ -1,6 +1,8 @@
 import React from 'react';
 import { CreditCard, TrendingUp, ShieldCheck, Sun, Moon } from 'lucide-react';
 import RecentTransactions from './RecentTransactions';
+import MonthlyBudget from './MonthlyBudget';
+import ProjectPitch from './ProjectPitch';
 import { useTheme } from '../context/ThemeContext';
 
 interface Props {
@@ -56,8 +58,12 @@ export default function Dashboard({ onQuickAction }: Props) {
             </button>
           </div>
         </div>
-        <RecentTransactions />
+        <div className="space-y-6">
+            <RecentTransactions />
+            <MonthlyBudget />
+        </div>
       </div>
+      <ProjectPitch />
     </div>
   );
 }

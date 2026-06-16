@@ -1,6 +1,6 @@
 {
   "name": "AegisEngage",
-  "description": "Autonomous multi-agent AI digital banking engagement ecosystem.",
+  "description": "AegisEngage is a next-generation, context-aware Agentic AI companion for digital banking, featuring personalized financial growth, gamified onboarding, and proactive fraud protection.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }
