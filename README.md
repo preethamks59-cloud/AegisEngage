@@ -1,83 +1,544 @@
-```markdown
-<div align="center">
-  <h1>🛡️ AegisEngage</h1>
-  <p>A modern, full-stack TypeScript web application powered by Vite and integrated with the Google Gemini API.</p>
-</div>
+# 🛡️ AegisEngage
+
+### Autonomous Multi-Agent AI Digital Banking Engagement Ecosystem
+
+#### SBI Hackathon Prototype
+
+![Python](https://img.shields.io/badge/Python-3.11-blue)
+![FastAPI](https://img.shields.io/badge/FastAPI-Backend-green)
+![React](https://img.shields.io/badge/React-Frontend-blue)
+![LangGraph](https://img.shields.io/badge/LangGraph-Agentic%20AI-purple)
+![TailwindCSS](https://img.shields.io/badge/TailwindCSS-UI-cyan)
+![License](https://img.shields.io/badge/License-MIT-orange)
 
 ---
 
-## 🏗️ Project Architecture & Tech Stack
+## 🚀 Overview
 
-This project is built as a highly responsive single-repository web application leveraging a lightweight backend proxy to handle secure AI requests.
+**AegisEngage** is an autonomous, multi-agent AI-powered digital banking engagement platform designed for the **State Bank of India (SBI Hackathon)**.
 
-* **Frontend Framework & Build Tool:** [Vite](https://vite.dev/) — Delivers an ultra-fast local development environment and optimized production bundling.
-* **Language:** [TypeScript](https://www.typescriptlang.org/) — Implemented across both client and server files to ensure strict, compile-time type safety.
-* **Backend Runtime:** [Node.js](https://nodejs.org/) — Powers the server-side environment.
-* **Core AI Engine:** [Google Gemini API](https://ai.google.dev/) — Implements advanced language models to drive the core features of the application.
+The platform transforms traditional banking interactions into intelligent, personalized, and conversational experiences through a coordinated ecosystem of AI agents.
 
----
+Rather than relying on a single chatbot, AegisEngage employs specialized agents that autonomously collaborate to:
 
-## 📂 Codebase Breakdown
-
-* **`server.ts`**: The backend environment. It acts as a secure proxy that reads your API keys from a protected server environment and forwards requests to Gemini, keeping your credentials safe from the browser.
-* **`src/` & `index.html`**: The frontend layer. Contains the user interface layouts, application views, styling, and interactive client-side logic.
-* **`vite.config.ts` & `tsconfig.json`**: Management files that configure module bundling, path mapping, and strict TypeScript compilation rules.
-* **`package.json`**: Contains scripts and external package manifests required to build and execute the application.
+* Drive financial growth and customer engagement
+* Simplify onboarding journeys
+* Enhance fraud awareness and trust
+* Deliver personalized banking recommendations
+* Ensure security and regulatory compliance
 
 ---
 
-## 🔄 How It Works (Data Flow)
+## 🎯 Problem Statement
 
+Modern banking customers face:
 
+* Complex application processes
+* Low awareness of financial products
+* Generic customer engagement
+* Fraud-related anxiety
+* Fragmented digital experiences
+
+AegisEngage addresses these challenges through an intelligent multi-agent architecture capable of understanding intent, retrieving relevant SBI knowledge, and providing actionable recommendations in real time.
+
+---
+
+# 🏗 Solution Architecture
+
+```text
+┌─────────────────────────────────────────┐
+│              React Frontend             │
+│    Voice + Chat Banking Assistant       │
+└──────────────────┬──────────────────────┘
+                   │
+                   ▼
+┌─────────────────────────────────────────┐
+│           FastAPI Backend               │
+└──────────────────┬──────────────────────┘
+                   │
+                   ▼
+┌─────────────────────────────────────────┐
+│      LangGraph Agent Orchestrator       │
+└───────┬──────────────┬──────────────────┘
+        │              │
+        ▼              ▼
+┌──────────────┐ ┌──────────────┐
+│Financial     │ │Onboarding    │
+│Growth Agent  │ │Agent         │
+└──────────────┘ └──────────────┘
+        │
+        ▼
+┌──────────────┐
+│Fraud Guard   │
+│Agent         │
+└──────────────┘
+
+        │
+        ▼
+
+┌─────────────────────────────────────────┐
+│     SBI Product Knowledge Base          │
+│      (Vector Retrieval Simulation)      │
+└─────────────────────────────────────────┘
+
+        │
+        ▼
+
+┌─────────────────────────────────────────┐
+│      Security Guardrail Layer           │
+│ Toxicity • PII • Hallucination Checks   │
+└─────────────────────────────────────────┘
 ```
 
-[ User Browser UI ]
+---
+
+# ✨ Key Features
+
+## 🤖 Multi-Agent Intelligence
+
+### 1. Financial Growth Agent
+
+Purpose:
+
+* Investment recommendations
+* Wealth advisory
+* Financial calculators
+* Product cross-selling
+
+Capabilities:
+
+* FD return projections
+* Mutual fund suggestions
+* Savings optimization
+* Personalized growth insights
+
+---
+
+### 2. Onboarding Agent
+
+Purpose:
+
+* Conversational product applications
+
+Capabilities:
+
+* Step-by-step account opening
+* Loan application guidance
+* KYC walkthroughs
+* Gamified user onboarding
+
+---
+
+### 3. Fraud Guard Agent
+
+Purpose:
+
+* Security awareness and fraud management
+
+Capabilities:
+
+* Explain suspicious activities
+* Fraud alert interpretation
+* Security education
+* Trust-building conversations
+
+---
+
+## 🧠 Agent Orchestration Layer
+
+Built using:
+
+* LangGraph
+* LangChain Routing Logic
+
+Responsibilities:
+
+* Intent classification
+* Agent selection
+* Knowledge retrieval
+* Context management
+* Response generation
+
+Example:
+
+```text
+User:
+"I want a high-return investment option"
+
+↓ Intent Detection
+
+Financial Growth Agent
+
+↓ Retrieval
+
+SBI Amrit Kalash FD
+SBI Wealth Mutual Funds
+
+↓ Guardrails
+
+Response Validation
+
+↓ Final Answer
+```
+
+---
+
+## 📚 SBI Knowledge Base
+
+Mock vector database representing:
+
+* PostgreSQL + pgvector
+* ChromaDB
+
+Preloaded Banking Products:
+
+### SBI Amrit Kalash FD
+
+* Tenure: 400 Days
+* Interest Rate: 7.10%
+
+### SBI Personal Loan
+
+* Starting Interest Rate: 11.15%
+
+### SBI Wealth Mutual Funds
+
+* Wealth management offerings
+* Long-term investment solutions
+
+---
+
+## 🔒 Security Guardrail Layer
+
+Inspired by NVIDIA NeMo Guardrails.
+
+Protects against:
+
+### Toxic Content
+
+Example:
+
+```text
+Blocked:
+Generate abusive content
+```
+
+---
+
+### PII Exposure
+
+Example:
+
+```text
+Show another customer's account details
+```
+
+Response:
+
+```text
+Access denied.
+Sensitive information cannot be disclosed.
+```
+
+---
+
+### Hallucinated Banking Data
+
+Example:
+
+```text
+Tell customers SBI FD gives 25% returns.
+```
+
+Response:
+
+```text
+Interest rate mismatch detected.
+Response blocked.
+```
+
+---
+
+# 💻 Technology Stack
+
+| Layer           | Technology             |
+| --------------- | ---------------------- |
+| Frontend        | React.js               |
+| UI Framework    | Tailwind CSS           |
+| Backend         | FastAPI                |
+| Agent Framework | LangGraph              |
+| LLM Layer       | Mock Llama-3 / Mistral |
+| Knowledge Base  | Simulated Vector Store |
+| Security        | Custom Guardrails      |
+| Deployment      | Docker Ready           |
+
+---
+
+# 📂 Project Structure
+
+```text
+AegisEngage/
 │
-▼ (1) User interacts or inputs data
-[ Vite Frontend (src/) ]
+├── backend/
+│   │
+│   ├── agents.py
+│   ├── main.py
+│   ├── knowledge_base.py
+│   └── requirements.txt
 │
-▼ (2) Sends secure request to local backend
-[ server.ts ]  <─── Reads key from ─── [ .env.local ]
+├── frontend/
+│   │
+│   ├── App.jsx
+│   ├── components/
+│   ├── pages/
+│   └── services/
 │
-▼ (3) Performs authorized API call
-[ Google Gemini API ]
-
+├── screenshots/
+│
+├── README.md
+│
+└── LICENSE
 ```
 
 ---
 
-## 🚀 Getting Started
+# ⚙️ Installation
 
-### Prerequisites
-Ensure you have [Node.js](https://nodejs.org/) installed on your machine.
+## Backend Setup
 
-### Installation & Setup
-
-1. **Install Dependencies**
-   Clone the repository, navigate to the root directory, and install the required packages:
-   ```bash
-   npm install
-
-```
-
-2. **Configure Environment Variables**
-Create a `.env.local` file in the root directory (you can use `.env.example` as a template) and add your Gemini API key:
-```env
-GEMINI_API_KEY=your_actual_api_key_here
-
-```
-
-
-3. **Run the Application**
-Start the local development server:
 ```bash
+cd backend
+
+python -m venv venv
+
+source venv/bin/activate
+# Windows
+venv\Scripts\activate
+
+pip install -r requirements.txt
+
+uvicorn main:app --reload
+```
+
+Backend URL:
+
+```text
+http://localhost:8000
+```
+
+---
+
+## Frontend Setup
+
+```bash
+cd frontend
+
+npm install
+
 npm run dev
-
 ```
 
+Frontend URL:
 
-Open the local URL provided in your terminal (typically `http://localhost:5173`) to view the application.
-
+```text
+http://localhost:5173
 ```
 
+---
+
+# 🔄 API Flow
+
+### Endpoint
+
+```http
+POST /chat
 ```
+
+Request:
+
+```json
+{
+  "message": "Suggest a good SBI investment plan"
+}
+```
+
+Response:
+
+```json
+{
+  "agent": "Financial Growth Agent",
+  "response": "SBI Amrit Kalash FD offers 7.10% interest...",
+  "cta": "Open FD Account"
+}
+```
+
+---
+
+# 🎤 User Journey
+
+### Scenario 1
+
+User:
+
+```text
+I want to grow my savings.
+```
+
+Agent Activated:
+
+```text
+Financial Growth Agent
+```
+
+Result:
+
+```text
+Investment recommendations
+FD projections
+CTA button
+```
+
+---
+
+### Scenario 2
+
+User:
+
+```text
+Help me open a savings account.
+```
+
+Agent Activated:
+
+```text
+Onboarding Agent
+```
+
+Result:
+
+```text
+Conversational onboarding
+Step-by-step guidance
+```
+
+---
+
+### Scenario 3
+
+User:
+
+```text
+Why was my card transaction flagged?
+```
+
+Agent Activated:
+
+```text
+Fraud Guard Agent
+```
+
+Result:
+
+```text
+Fraud explanation
+Security recommendations
+Trust-building response
+```
+
+---
+
+# 📸 Demo Screens
+
+Add screenshots here:
+
+```text
+screenshots/
+├── dashboard.png
+├── onboarding-agent.png
+├── fraud-agent.png
+└── financial-agent.png
+```
+
+Example:
+
+```markdown
+![Dashboard](screenshots/dashboard.png)
+```
+
+---
+
+# 🌟 Innovation Highlights
+
+### Autonomous Multi-Agent Design
+
+Unlike traditional banking chatbots, AegisEngage uses specialized AI agents coordinated through a central orchestrator.
+
+### Conversational Banking
+
+Transforms static forms into engaging dialogues.
+
+### Embedded Guardrails
+
+Built-in compliance and safety layer.
+
+### Retrieval-Augmented Responses
+
+Grounded in SBI product knowledge.
+
+### Scalable Architecture
+
+Ready for integration with:
+
+* Core Banking Systems
+* CRM Platforms
+* RBI Compliance Workflows
+* Real-time Fraud Engines
+
+---
+
+# 🔮 Future Enhancements
+
+* Voice Banking Integration
+* Multilingual Support (Hindi, Kannada, Tamil, Telugu)
+* Real SBI API Integration
+* Customer Segmentation Engine
+* AI-powered Financial Health Score
+* WhatsApp Banking Assistant
+* Agent Memory & Personalization
+* Real-Time Fraud Monitoring
+
+---
+
+# 🏆 SBI Hackathon Alignment
+
+This solution directly supports SBI's vision of:
+
+✅ Customer-Centric Banking
+
+✅ AI-Powered Engagement
+
+✅ Digital Financial Inclusion
+
+✅ Personalized Product Discovery
+
+✅ Secure Digital Banking
+
+✅ Future-Ready Banking Experiences
+
+---
+
+# 👨‍💻 Team
+
+Team Name: **AegisEngage**
+
+Project: **Autonomous Multi-Agent AI Digital Banking Engagement Ecosystem**
+
+Built for the **State Bank of India (SBI) Hackathon**
+
+---
+
+## License
+
+MIT License
+
+Copyright (c) 2026 AegisEngage Team
