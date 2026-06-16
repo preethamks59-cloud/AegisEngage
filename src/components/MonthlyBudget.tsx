@@ -12,8 +12,8 @@ const COLORS = ['#0051A1', '#008a97', '#F59E0B', '#10B981'];
 
 export default function MonthlyBudget() {
   return (
-    <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-100 dark:border-slate-800 shadow-sm overflow-hidden mt-6 p-6">
-      <h2 className="font-bold text-slate-800 dark:text-white text-lg mb-4">Monthly Budget Overview</h2>
+    <div className="bg-white rounded-3xl border border-slate-100 shadow-sm overflow-hidden mt-6 p-6">
+      <h2 className="font-bold text-slate-800 text-lg mb-4">Monthly Budget Overview</h2>
       <div className="h-64">
         <ResponsiveContainer width="100%" height="100%">
           <PieChart>
@@ -30,7 +30,7 @@ export default function MonthlyBudget() {
         {DATA.map((item, index) => (
             <div key={item.name} className="flex items-center gap-2 text-xs">
                 <div className="w-3 h-3 rounded-full" style={{ background: COLORS[index] }}></div>
-                <span className="text-slate-600 dark:text-slate-400">{item.name}</span>
+                <span className="text-slate-600">{item.name}</span>
             </div>
         ))}
       </div>

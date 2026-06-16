@@ -49,23 +49,23 @@ export default function AegisDrawer({ isOpen, onClose, initialMessage, onMessage
             initial={{ x: 300 }} animate={{ x: 0 }} exit={{ x: 300 }}
             className="fixed inset-y-0 right-0 w-96 bg-white shadow-2xl z-50 flex flex-col border-l border-slate-200"
           >
-            <div className="p-6 border-b border-slate-100 dark:border-slate-800 flex justify-between items-center bg-slate-50 dark:bg-slate-900">
-              <h2 className="font-bold text-slate-800 dark:text-white">AegisEngage AI</h2>
-              <button onClick={onClose} className="hover:bg-slate-200 dark:hover:bg-slate-700 p-1.5 rounded-full"><X size={18} /></button>
+            <div className="p-6 border-b border-slate-100 flex justify-between items-center bg-slate-50">
+              <h2 className="font-bold text-slate-800">AegisEngage AI</h2>
+              <button onClick={onClose} className="hover:bg-slate-200 p-1.5 rounded-full"><X size={18} /></button>
             </div>
             
             <div className="flex-1 overflow-y-auto p-6 space-y-4">
               {messages.map((m, i) => (
-                <div key={i} className={`p-4 rounded-2xl text-sm ${m.role === 'user' ? 'bg-[#0051A1] text-white ml-auto rounded-tr-none' : 'bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 rounded-tl-none'}`}>
+                <div key={i} className={`p-4 rounded-2xl text-sm ${m.role === 'user' ? 'bg-[#0051A1] text-white ml-auto rounded-tr-none' : 'bg-slate-100 text-slate-800 rounded-tl-none'}`}>
                   {m.text}
                 </div>
               ))}
             </div>
 
-            <div className="p-6 border-t border-slate-100 dark:border-slate-800 flex gap-2">
+            <div className="p-6 border-t border-slate-100 flex gap-2">
               <input 
                 value={input} onChange={e => setInput(e.target.value)}
-                className="flex-1 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 text-sm bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#0051A1]" placeholder="Ask about SBI..."
+                className="flex-1 border border-slate-200 rounded-2xl p-4 text-sm bg-slate-50 text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#0051A1]" placeholder="Ask about SBI..."
               />
               <button onClick={() => send(input)} className="bg-[#0051A1] text-white p-4 rounded-2xl"><Send size={18} /></button>
             </div>
