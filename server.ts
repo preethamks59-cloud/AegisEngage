@@ -1,52 +1,52 @@
 import express from "express";
 import path from "path";
 import { createServer as createViteServer } from "vite";
+import { GoogleGenAI } from "@google/genai";
 
 const app = express();
 const PORT = 3000;
 
 app.use(express.json());
 
-// --- Mock Knowledge Base ---
-const BANKING_PRODUCTS = [
-  { id: 1, name: "SBI Amrit Kalash FD", details: "400 Days tenure at 7.10% interest p.a." },
-  { id: 2, name: "SBI Personal Loan", details: "Starting at 11.15% interest - Fast disbursement." },
-  { id: 3, name: "SBI Wealth Mutual Fund", details: "Aggressive & Diversified schemes for long term growth." }
-];
-
-// --- Guardrail ---
-function applyGuardrails(text: string): { allowed: boolean; reason?: string } {
-  const forbidden = ["PII", "hack", "bypass", "interest rate 99%"];
-  for (const f of forbidden) {
-    if (text.toLowerCase().includes(f.toLowerCase())) {
-      return { allowed: false, reason: "Security violation detected." };
+// Initialize Gemini Client
+const ai = new GoogleGenAI({
+  apiKey: process.env.GEMINI_API_KEY!,
+  httpOptions: {
+    headers: {
+      'User-Agent': 'aistudio-build',
     }
   }
-  return { allowed: true };
-}
+});
 
-// --- Agents ---
-const agents = {
-  growth: (input: string) => `Financial Growth Agent: Analyzing your interest in ${input}. I suggest looking at our ${BANKING_PRODUCTS[0].name} for optimal returns.`,
-  onboarding: (input: string) => `Onboarding Agent: Excited to help you! Let's start transforming your request "${input}" into an effortless application. What's your next goal?`,
-  fraud: (input: string) => `Fraud Guard Agent: I've scanned your request "${input}". No anomalies detected, but I'm keeping an eye on your secure account status to prevent any unauthorized activity.`
-};
-
-// --- Orchestrator ---
+// --- Chat Endpoint ---
 app.post("/api/chat", async (req, res) => {
-  const { message } = req.body;
-  
-  const guard = applyGuardrails(message);
-  if (!guard.allowed) return res.json({ response: guard.reason });
+  try {
+    console.log("Request Body:", JSON.stringify(req.body, null, 2));
+    const messages = req.body.messages;
+    if (!Array.isArray(messages)) {
+      return res.status(400).json({ error: "Invalid request: messages array required" });
+    }
+    
+    // Transform frontend history into Gemini content format
+    const contents = messages.map((m: { role: string; text: string }) => ({
+      role: m.role === 'user' ? 'user' : 'model',
+      parts: [{ text: m.text || "" }]
+    }));
 
-  const lower = message.toLowerCase();
-  let agentKey: keyof typeof agents = "growth";
-  
-  if (lower.includes("apply") || lower.includes("open")) agentKey = "onboarding";
-  if (lower.includes("fraud") || lower.includes("alert") || lower.includes("security")) agentKey = "fraud";
+    // Using Gemini API with history
+    const response = await ai.models.generateContent({
+      model: "gemini-3.5-flash",
+      contents: contents as any,
+      config: {
+        systemInstruction: "You are a helpful and professional financial AI assistant for SBI Bank. Provide concise, actionable, and accurate banking advice. Act as a financial guardian and growth partner. Keep responses direct and relevant to the user's inquiry.",
+      },
+    });
 
-  const response = agents[agentKey](message);
-  res.json({ response, agent: agentKey });
+    res.json({ response: response.text || "I'm sorry, I couldn't generate a response." });
+  } catch (error) {
+    console.error("Gemini API Error:", error);
+    res.status(500).json({ error: "Failed to communicate with the AI assistant." });
+  }
 });
 
 async function startServer() {
