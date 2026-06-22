@@ -22,20 +22,21 @@ const ai = new GoogleGenAI({
 app.post("/api/chat", async (req, res) => {
   try {
     console.log("Request Body:", JSON.stringify(req.body, null, 2));
-    const messages = req.body.messages;
-    if (!Array.isArray(messages)) {
+    const messages = req.body?.messages;
+    if (!messages || !Array.isArray(messages)) {
+      console.error("Invalid request: messages array missing or invalid");
       return res.status(400).json({ error: "Invalid request: messages array required" });
     }
     
     // Transform frontend history into Gemini content format
     const contents = messages.map((m: { role: string; text: string }) => ({
       role: m.role === 'user' ? 'user' : 'model',
-      parts: [{ text: m.text || "" }]
+      parts: [{ text: (m.text || "").toString() }]
     }));
 
-    // Using Gemini API with history
+    // Using Gemini API with history - using gemini-1.5-pro
     const response = await ai.models.generateContent({
-      model: "gemini-3.5-flash",
+      model: "gemini-1.5-pro",
       contents: contents as any,
       config: {
         systemInstruction: "You are a helpful and professional financial AI assistant for SBI Bank. Provide concise, actionable, and accurate banking advice. Act as a financial guardian and growth partner. Keep responses direct and relevant to the user's inquiry.",
@@ -43,9 +44,13 @@ app.post("/api/chat", async (req, res) => {
     });
 
     res.json({ response: response.text || "I'm sorry, I couldn't generate a response." });
-  } catch (error) {
-    console.error("Gemini API Error:", error);
-    res.status(500).json({ error: "Failed to communicate with the AI assistant." });
+  } catch (error: any) {
+    console.error("Gemini API Error details:", error);
+    if (error?.status === 429) {
+      res.status(429).json({ error: "Rate limit exceeded. Please wait a moment and try again." });
+    } else {
+      res.status(500).json({ error: "Failed to communicate with the AI assistant. Please try again." });
+    }
   }
 });
 

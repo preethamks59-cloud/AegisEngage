@@ -18,6 +18,23 @@ const LoadingDots = () => (
     </div>
 );
 
+const TypingResponse = ({ text }: { text?: string }) => {
+    const [displayedText, setDisplayedText] = useState('');
+    useEffect(() => {
+        const safeText = text || '';
+        if (!safeText) return;
+        
+        let index = 0;
+        const interval = setInterval(() => {
+            setDisplayedText(safeText.slice(0, index + 1));
+            index++;
+            if (index >= safeText.length) clearInterval(interval);
+        }, 10);
+        return () => clearInterval(interval);
+    }, [text]);
+    return <ReactMarkdown>{displayedText}</ReactMarkdown>;
+};
+
 export default function AegisDrawer({ isOpen, onClose, initialMessage, onMessageProcessed }: Props) {
   const [messages, setMessages] = useState<{ role: 'user' | 'ai', text: string }[]>([]);
   const [input, setInput] = useState('');
@@ -37,7 +54,11 @@ export default function AegisDrawer({ isOpen, onClose, initialMessage, onMessage
         body: JSON.stringify({ messages: updatedMessages })
     });
     const data = await res.json();
-    setMessages(prev => [...prev, { role: 'ai', text: data.response }]);
+    if (res.ok) {
+        setMessages(prev => [...prev, { role: 'ai', text: data.response }]);
+    } else {
+        setMessages(prev => [...prev, { role: 'ai', text: data.error || "Something went wrong. Please try again." }]);
+    }
     setIsLoading(false);
   };
 
@@ -73,7 +94,7 @@ export default function AegisDrawer({ isOpen, onClose, initialMessage, onMessage
                 <div key={i} className={`p-4 rounded-2xl text-sm whitespace-pre-line ${m.role === 'user' ? 'bg-[#0051A1] text-white ml-auto rounded-tr-none' : 'bg-slate-100 text-slate-800 rounded-tl-none'}`}>
                   {m.role === 'ai' ? (
                     <div className="space-y-2 [&_ul]:list-disc [&_ul]:ml-4 [&_ol]:list-decimal [&_ol]:ml-4 [&_code]:bg-slate-200 [&_code]:px-1 [&_code]:rounded whitespace-normal">
-                      <ReactMarkdown>{m.text}</ReactMarkdown>
+                      <TypingResponse text={m.text} />
                     </div>
                   ) : (
                     m.text
