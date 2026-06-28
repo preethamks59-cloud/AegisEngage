@@ -515,7 +515,7 @@ Designed for:
 
 ---
 
-# 👨‍💻 Team
+# 👨💻 Team
 
 SBI Hackathon Submission
 
