@@ -1,17 +1,31 @@
 import React from 'react';
 import { CreditCard, TrendingUp, ShieldCheck } from 'lucide-react';
 import RecentTransactions from './RecentTransactions';
-import SecurityNotifications from './SecurityNotifications';
+import NotificationFeed from './NotificationFeed';
 import MonthlyBudget from './MonthlyBudget';
 import ProjectPitch from './ProjectPitch';
 import { useTheme } from '../context/ThemeContext';
+import { BankNotification } from '../types';
 
 interface Props {
   onQuickAction: (message: string) => void;
   onOpenChatbot: () => void;
+  notifications: BankNotification[];
+  onMarkRead: (id: string) => void;
+  onMarkAllRead: () => void;
+  onClear: (id: string) => void;
+  onSimulateAlert: () => void;
 }
 
-export default function Dashboard({ onQuickAction, onOpenChatbot }: Props) {
+export default function Dashboard({ 
+  onQuickAction, 
+  onOpenChatbot,
+  notifications,
+  onMarkRead,
+  onMarkAllRead,
+  onClear,
+  onSimulateAlert
+}: Props) {
   return (
     <div className="p-6 space-y-6">
       <div className="mb-2">
@@ -68,7 +82,14 @@ export default function Dashboard({ onQuickAction, onOpenChatbot }: Props) {
         <div className="space-y-6">
             <RecentTransactions />
             <MonthlyBudget />
-            <SecurityNotifications />
+            <NotificationFeed 
+              notifications={notifications}
+              onMarkRead={onMarkRead}
+              onMarkAllRead={onMarkAllRead}
+              onClear={onClear}
+              onSimulateAlert={onSimulateAlert}
+              onAskAegis={onQuickAction}
+            />
         </div>
       </div>
       <ProjectPitch />
