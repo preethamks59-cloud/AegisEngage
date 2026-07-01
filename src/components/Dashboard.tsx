@@ -1,5 +1,16 @@
-import React from 'react';
-import { CreditCard, TrendingUp, ShieldCheck } from 'lucide-react';
+import React, { useState } from 'react';
+import { 
+  CreditCard, 
+  TrendingUp, 
+  ShieldCheck, 
+  Layers, 
+  Bot, 
+  Sparkles,
+  ArrowRight,
+  ShieldAlert,
+  ChevronRight,
+  Sparkle
+} from 'lucide-react';
 import RecentTransactions from './RecentTransactions';
 import NotificationFeed from './NotificationFeed';
 import MonthlyBudget from './MonthlyBudget';
@@ -26,79 +37,168 @@ export default function Dashboard({
   onClear,
   onSimulateAlert
 }: Props) {
+  const [activeTab, setActiveTab] = useState<'financial' | 'architecture'>('financial');
+
   return (
-    <div className="p-6 space-y-6">
-      <div className="mb-2">
+    <div className="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8 space-y-6">
+      {/* Top Brand Area */}
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <a 
           href="https://sbi.bank.in/web/personal-banking/home" 
           target="_blank" 
           rel="noopener noreferrer"
+          className="hover:opacity-90 transition-opacity"
         >
           <img src="https://sbi.bank.in/o/SBI-Theme/images/custom/logo.png" alt="SBI Logo" className="h-8 w-auto" />
         </a>
+
+        {/* Dynamic Navigation Pill */}
+        <div className="flex bg-slate-100 p-1 rounded-2xl border border-slate-200/40 shrink-0">
+          <button
+            onClick={() => setActiveTab('financial')}
+            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all ${
+              activeTab === 'financial'
+                ? 'bg-white text-[#0051A1] shadow-sm'
+                : 'text-slate-500 hover:text-slate-800'
+            }`}
+          >
+            <TrendingUp size={14} />
+            Live Financial Console
+          </button>
+          <button
+            onClick={() => setActiveTab('architecture')}
+            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all ${
+              activeTab === 'architecture'
+                ? 'bg-white text-slate-800 shadow-sm'
+                : 'text-slate-500 hover:text-slate-800'
+            }`}
+          >
+            <Layers size={14} />
+            Aegis Architecture Hub
+          </button>
+        </div>
       </div>
-      <header className="flex justify-between items-center mb-8">
-        <h1 className="text-2xl font-bold text-slate-800 dark:text-white tracking-tight">Namaste, <span className="text-[#0051A1] dark:text-blue-400">Arjun Sharma</span></h1>
-        <div className="flex items-center gap-4">
-            <div className="bg-slate-50 border border-slate-200 rounded-full px-4 py-2 flex items-center gap-2">
-              <span className="text-xs font-bold text-slate-400">Tier:</span>
-              <span className="text-xs font-bold text-[#008a97] uppercase tracking-tighter">SBI Wealth</span>
-            </div>
+
+      {/* Main Header / Welcome Panel */}
+      <header className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-slate-100 pb-5">
+        <div>
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+            Namaste, <span className="text-[#0051A1]">Arjun Sharma</span>
+          </h1>
+          <p className="text-xs sm:text-sm text-slate-500 mt-1">Manage your corporate wealth and monitor real-time AI security guardrails.</p>
+        </div>
+        <div className="flex items-center gap-3 shrink-0">
+          <div className="bg-[#008a97]/10 border border-[#008a97]/20 rounded-2xl px-4 py-2 flex items-center gap-2">
+            <span className="text-[10px] font-bold text-slate-400 uppercase">Tier:</span>
+            <span className="text-xs font-extrabold text-[#008a97] uppercase tracking-wider">SBI Wealth</span>
+          </div>
+          <button
+            onClick={onOpenChatbot}
+            className="flex items-center gap-2 px-4 py-2 bg-[#0051A1] hover:bg-[#003d7a] text-white text-xs font-bold rounded-2xl shadow-sm hover:shadow transition-all cursor-pointer"
+          >
+            <Bot size={14} className="animate-pulse" />
+            Launch Aegis Assistant
+          </button>
         </div>
       </header>
-      
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {[
-          { title: 'Portfolio Value', amount: '₹12,45,000', icon: TrendingUp },
-          { title: 'Credit Limit', amount: '₹5,00,000', icon: CreditCard },
-          { title: 'Security Status', amount: 'Secure', icon: ShieldCheck },
-        ].map((item, i) => (
-          <div key={i} className="bg-white p-6 rounded-3xl shadow-sm border border-slate-100">
-            <div className="flex justify-between items-center mb-2">
-              <p className="text-sm text-slate-500 font-medium">{item.title}</p>
-              <item.icon className="text-[#0051A1] size-5" />
+
+      {/* Main Tab Content switcher */}
+      {activeTab === 'financial' ? (
+        <div className="space-y-6 animate-fadeIn">
+          {/* Top Quick Status Overview */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+            {[
+              { title: 'Portfolio Value', amount: '₹12,45,000', icon: TrendingUp, detail: '+14.2% SBI Bluechip Mutual Fund', color: 'text-emerald-500 bg-emerald-50' },
+              { title: 'SBI Card Credit Limit', amount: '₹5,00,000', icon: CreditCard, detail: '₹1,45,230 currently utilized', color: 'text-[#0051A1] bg-[#0051A1]/5' },
+              { title: 'Security Status', amount: 'Fully Secure', icon: ShieldCheck, detail: 'NeMo Guardrails & PII Masking active', color: 'text-blue-500 bg-blue-50' },
+            ].map((item, i) => (
+              <div key={i} className="bg-white p-6 rounded-3xl shadow-2xs border border-slate-100 hover:shadow-xs transition-shadow flex flex-col justify-between min-h-[140px]">
+                <div className="flex justify-between items-start">
+                  <p className="text-xs text-slate-400 font-bold uppercase tracking-wider">{item.title}</p>
+                  <div className={`p-2 rounded-xl ${item.color}`}>
+                    <item.icon size={16} />
+                  </div>
+                </div>
+                <div className="mt-4">
+                  <p className="text-2xl sm:text-3xl font-black tracking-tight text-slate-900">{item.amount}</p>
+                  <p className="text-[10px] text-slate-500 font-medium mt-1">{item.detail}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Balanced Two-Column Operations Layout */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+            
+            {/* Left Column (Main operations area, col-span 7) */}
+            <div className="lg:col-span-7 space-y-6">
+              
+              {/* Recommended Products */}
+              <div className="bg-white rounded-3xl border border-slate-100 shadow-2xs overflow-hidden">
+                <div className="p-5 border-b border-slate-100 bg-slate-50/20 flex items-center justify-between">
+                  <div>
+                    <h2 className="font-extrabold text-slate-800 text-sm">SBI Intelligence Recommended Products</h2>
+                    <p className="text-[10px] text-slate-400 mt-0.5">Optimized recommendations powered by Financial Growth Agent</p>
+                  </div>
+                  <Sparkle size={14} className="text-amber-500 animate-spin-slow" />
+                </div>
+                <div className="p-5 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <button 
+                    onClick={() => onQuickAction("Calculate maturity & returns for SBI Amrit Kalash FD")} 
+                    className="border border-slate-100 p-4 rounded-2xl hover:bg-slate-50 text-left transition-all hover:border-slate-200 group cursor-pointer flex flex-col justify-between h-full min-h-[120px]"
+                  >
+                    <div>
+                      <h3 className="font-bold text-slate-900 text-xs sm:text-sm group-hover:text-[#0051A1] transition-colors">SBI Amrit Kalash FD</h3>
+                      <p className="text-[11px] text-slate-500 leading-normal mt-1">High-yield short term fixed deposit. 7.10% interest for 400 days.</p>
+                    </div>
+                    <div className="flex items-center gap-1 text-[10px] text-[#0051A1] font-bold mt-3">
+                      Simulate returns with Aegis
+                      <ChevronRight size={12} className="group-hover:translate-x-1 transition-transform" />
+                    </div>
+                  </button>
+                  <button 
+                    onClick={() => onQuickAction("Apply for SBI Savings Account and start video KYC")} 
+                    className="border border-slate-100 p-4 rounded-2xl hover:bg-slate-50 text-left transition-all hover:border-slate-200 group cursor-pointer flex flex-col justify-between h-full min-h-[120px]"
+                  >
+                    <div>
+                      <h3 className="font-bold text-slate-900 text-xs sm:text-sm group-hover:text-[#0051A1] transition-colors">Instant Savings Account</h3>
+                      <p className="text-[11px] text-slate-500 leading-normal mt-1">Onboard online with zero hassle. Fully digital, instant salary account opening.</p>
+                    </div>
+                    <div className="flex items-center gap-1 text-[10px] text-[#0051A1] font-bold mt-3">
+                      Start conversational KYC
+                      <ChevronRight size={12} className="group-hover:translate-x-1 transition-transform" />
+                    </div>
+                  </button>
+                </div>
+              </div>
+
+              {/* Transactions History */}
+              <RecentTransactions />
+
+              {/* Monthly Budget Graph */}
+              <MonthlyBudget />
             </div>
-            <p className="text-3xl font-bold tracking-tight text-slate-900">{item.amount}</p>
-          </div>
-        ))}
-      </div>
-      
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="bg-white rounded-3xl border border-slate-100 shadow-sm overflow-hidden">
-          <div className="p-5 border-b border-slate-100">
-              <h2 className="font-bold text-slate-800">Recommended Products</h2>
-          </div>
-          <div className="p-6 grid grid-cols-1 gap-4">
-            <button onClick={() => onQuickAction("apply for SBI Amrit Kalash FD")} className="border border-slate-100 p-4 rounded-2xl hover:bg-slate-50 text-left">
-              <h3 className="font-bold text-slate-900">SBI Amrit Kalash FD</h3>
-              <p className="text-sm text-slate-500">7.10% interest for 400 days tenure.</p>
-            </button>
-            <button onClick={() => onQuickAction("apply for Wealth Mutual Funds")} className="border border-slate-100 p-4 rounded-2xl hover:bg-slate-50 text-left">
-              <h3 className="font-bold text-slate-900">Wealth Mutual Funds</h3>
-              <p className="text-sm text-slate-500">Aggressive schemes for high growth.</p>
-            </button>
+
+            {/* Right Column (Intelligent Alerts Sidebar, col-span 5) */}
+            <div className="lg:col-span-5">
+              <NotificationFeed 
+                notifications={notifications}
+                onMarkRead={onMarkRead}
+                onMarkAllRead={onMarkAllRead}
+                onClear={onClear}
+                onSimulateAlert={onSimulateAlert}
+                onAskAegis={onQuickAction}
+              />
+            </div>
           </div>
         </div>
-        <div className="space-y-6">
-            <RecentTransactions />
-            <MonthlyBudget />
-            <NotificationFeed 
-              notifications={notifications}
-              onMarkRead={onMarkRead}
-              onMarkAllRead={onMarkAllRead}
-              onClear={onClear}
-              onSimulateAlert={onSimulateAlert}
-              onAskAegis={onQuickAction}
-            />
+      ) : (
+        <div className="animate-fadeIn">
+          {/* About Aegis / Project Pitch */}
+          <ProjectPitch />
         </div>
-      </div>
-      <ProjectPitch />
-      <button 
-        onClick={onOpenChatbot}
-        className="w-full bg-[#0051A1] text-white p-4 rounded-3xl font-bold hover:bg-[#003d7a] transition-colors"
-      >
-        Chat with Aegis
-      </button>
+      )}
     </div>
   );
 }
+

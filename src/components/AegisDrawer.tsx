@@ -18,10 +18,11 @@ interface Props {
   onClose: () => void;
   initialMessage?: string | null;
   onMessageProcessed: () => void;
+  onOpen?: () => void;
 }
 
 const LoadingDots = () => (
-    <div className="flex space-x-1.5 p-4 bg-slate-100 dark:bg-slate-800 rounded-2xl rounded-tl-none items-center w-fit self-start shadow-sm border border-slate-100/50">
+    <div className="flex space-x-1.5 p-4 bg-slate-100 rounded-2xl rounded-tl-none items-center w-fit self-start shadow-sm border border-slate-100/50">
         <div className="w-2.5 h-2.5 bg-slate-400 rounded-full animate-bounce [animation-delay:-0.3s]"></div>
         <div className="w-2.5 h-2.5 bg-slate-400 rounded-full animate-bounce [animation-delay:-0.15s]"></div>
         <div className="w-2.5 h-2.5 bg-slate-400 rounded-full animate-bounce"></div>
@@ -51,7 +52,7 @@ const TypingResponse = ({ text }: { text?: string }) => {
     return <ReactMarkdown>{displayedText}</ReactMarkdown>;
 };
 
-export default function AegisDrawer({ isOpen, onClose, initialMessage, onMessageProcessed }: Props) {
+export default function AegisDrawer({ isOpen, onClose, initialMessage, onMessageProcessed, onOpen }: Props) {
   const [messages, setMessages] = useState<{ role: 'user' | 'ai', text: string }[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -121,7 +122,7 @@ export default function AegisDrawer({ isOpen, onClose, initialMessage, onMessage
     <>
       {/* Floating Chat Icon (when drawer is closed) */}
       <button 
-        onClick={() => { if (!isOpen) scrollToBottom(); }}
+        onClick={() => { if (!isOpen) { onOpen?.(); } }}
         className={`fixed bottom-6 right-6 bg-[#0051A1] text-white p-4.5 rounded-2xl shadow-xl transition-all hover:scale-110 active:scale-95 z-40 hover:bg-[#003d7a] cursor-pointer ${isOpen ? 'opacity-0 scale-90 pointer-events-none' : 'opacity-100 scale-100'}`}
       >
         <MessageSquare size={24} className="animate-pulse" />
@@ -145,7 +146,7 @@ export default function AegisDrawer({ isOpen, onClose, initialMessage, onMessage
               animate={{ x: 0 }} 
               exit={{ x: '100%' }}
               transition={{ type: 'spring', damping: 26, stiffness: 220 }}
-              className="fixed inset-y-0 right-0 w-full max-w-md md:w-[440px] bg-white dark:bg-slate-950 shadow-2xl z-50 flex flex-col border-l border-slate-100"
+              className="fixed inset-y-0 right-0 w-full max-w-md md:w-[440px] bg-white shadow-2xl z-50 flex flex-col border-l border-slate-100"
             >
               {/* Header */}
               <div className="p-5 border-b border-slate-100 flex justify-between items-center bg-slate-50/80 backdrop-blur-md">

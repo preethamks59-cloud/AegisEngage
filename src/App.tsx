@@ -159,6 +159,7 @@ export default function App() {
           onClose={() => setDrawerOpen(false)} 
           initialMessage={triggerMessage} 
           onMessageProcessed={() => setTriggerMessage(null)}
+          onOpen={() => setDrawerOpen(true)}
         />
 
         {/* Global Toast Overlay */}
