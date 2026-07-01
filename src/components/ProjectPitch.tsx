@@ -141,6 +141,16 @@ export default function ProjectPitch() {
                   </tr>
                 </tbody>
               </table>
+
+              <div className="pt-3 border-t border-slate-200/50">
+                <div className="text-[10px] font-bold text-[#0051A1] uppercase tracking-wider mb-1 flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 bg-[#008a97] rounded-full animate-pulse" />
+                  Enterprise Scale Optimization
+                </div>
+                <p className="text-[10px] text-slate-500 leading-relaxed font-medium">
+                  <strong>Scale Optimization Note:</strong> Uses a hybrid routing matrix. Light intent classification and localized edge tasks are offloaded to lightweight quantized models, while complex state loops (FinLlama-3-8B / Mistral-7B) are selectively orchestrated via Kubernetes only during high-value financial planning events.
+                </p>
+              </div>
             </div>
           </div>
         )}
@@ -215,9 +225,9 @@ export default function ProjectPitch() {
             <div className="p-4 bg-emerald-50/60 border border-emerald-100/80 rounded-2xl flex flex-col sm:flex-row justify-between sm:items-center gap-2">
               <div className="flex items-center gap-2 text-emerald-800 font-bold text-xs sm:text-sm">
                 <TrendingUp size={16} />
-                General Interest Rates: Starting from 7.25% p.a. onwards
+                General Loan & Term Deposit Interest Rates: Starting from 7.25% p.a. onwards (Specific SB Account rates apply).
               </div>
-              <span className="text-[9px] font-bold text-emerald-600 bg-white border border-emerald-200/50 px-2.5 py-0.5 rounded-full uppercase">
+              <span className="text-[9px] font-bold text-emerald-600 bg-white border border-emerald-200/50 px-2.5 py-0.5 rounded-full uppercase shrink-0">
                 Effective April 1, 2026
               </span>
             </div>

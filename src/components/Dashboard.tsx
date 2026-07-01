@@ -102,6 +102,24 @@ export default function Dashboard({
         </div>
       </header>
 
+      {/* Scale Optimization Note Banner */}
+      <div id="scale-opt-card" className="bg-slate-50 border border-slate-200/60 rounded-3xl p-5 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+        <div className="flex items-start gap-3">
+          <div className="bg-[#0051A1]/10 p-2.5 rounded-2xl text-[#0051A1]">
+            <Layers size={18} />
+          </div>
+          <div>
+            <h4 className="font-bold text-slate-800 text-xs sm:text-sm">Aegis Architecture Hub & Scale Matrix</h4>
+            <p className="text-[11px] text-slate-500 mt-1 leading-relaxed max-w-4xl">
+              <strong>Scale Optimization Note:</strong> Uses a hybrid routing matrix. Light intent classification and localized edge tasks are offloaded to lightweight quantized models, while complex state loops (FinLlama-3-8B / Mistral-7B) are selectively orchestrated via Kubernetes only during high-value financial planning events.
+            </p>
+          </div>
+        </div>
+        <div className="text-[10px] bg-emerald-50 text-emerald-700 font-bold px-3 py-1.5 rounded-full border border-emerald-100 uppercase tracking-wide shrink-0">
+          500M+ Customers Ready
+        </div>
+      </div>
+
       {/* Main Tab Content switcher */}
       {activeTab === 'financial' ? (
         <div className="space-y-6 animate-fadeIn">
