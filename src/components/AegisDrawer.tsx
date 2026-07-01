@@ -26,10 +26,17 @@ const TypingResponse = ({ text }: { text?: string }) => {
         
         let index = 0;
         const interval = setInterval(() => {
-            setDisplayedText(safeText.slice(0, index + 1));
-            index++;
-            if (index >= safeText.length) clearInterval(interval);
-        }, 10);
+            // Adjust typing speed based on content length
+            const increment = safeText.length > 500 ? 5 : safeText.length > 200 ? 3 : 1;
+            index += increment;
+            
+            if (index >= safeText.length) {
+                setDisplayedText(safeText);
+                clearInterval(interval);
+            } else {
+                setDisplayedText(safeText.slice(0, index));
+            }
+        }, 8);
         return () => clearInterval(interval);
     }, [text]);
     return <ReactMarkdown>{displayedText}</ReactMarkdown>;
@@ -94,7 +101,11 @@ export default function AegisDrawer({ isOpen, onClose, initialMessage, onMessage
                 <div key={i} className={`p-4 rounded-2xl text-sm whitespace-pre-line ${m.role === 'user' ? 'bg-[#0051A1] text-white ml-auto rounded-tr-none' : 'bg-slate-100 text-slate-800 rounded-tl-none'}`}>
                   {m.role === 'ai' ? (
                     <div className="space-y-2 [&_ul]:list-disc [&_ul]:ml-4 [&_ol]:list-decimal [&_ol]:ml-4 [&_code]:bg-slate-200 [&_code]:px-1 [&_code]:rounded whitespace-normal">
-                      <TypingResponse text={m.text} />
+                      {i === messages.length - 1 ? (
+                        <TypingResponse text={m.text} />
+                      ) : (
+                        <ReactMarkdown>{m.text}</ReactMarkdown>
+                      )}
                     </div>
                   ) : (
                     m.text

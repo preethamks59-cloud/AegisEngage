@@ -34,9 +34,9 @@ app.post("/api/chat", async (req, res) => {
       parts: [{ text: (m.text || "").toString() }]
     }));
 
-    // Using Gemini API with history - using gemini-1.5-pro
+    // Using Gemini API with history - using gemini-3.5-flash
     const response = await ai.models.generateContent({
-      model: "gemini-1.5-pro",
+      model: "gemini-3.5-flash",
       contents: contents as any,
       config: {
         systemInstruction: "You are a helpful and professional financial AI assistant for SBI Bank. Provide concise, actionable, and accurate banking advice. Act as a financial guardian and growth partner. Keep responses direct and relevant to the user's inquiry.",
