@@ -8,7 +8,7 @@ const TRANSACTIONS = [
 
 export default function RecentTransactions() {
   return (
-    <div className="bg-white rounded-3xl border border-slate-100 shadow-sm overflow-hidden mt-6">
+    <div className="bg-white rounded-3xl border border-slate-100 shadow-sm overflow-hidden">
       <div className="p-5 border-b border-slate-100">
         <h2 className="font-bold text-slate-800">Recent Transactions</h2>
       </div>

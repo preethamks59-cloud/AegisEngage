@@ -12,7 +12,7 @@ const COLORS = ['#0051A1', '#008a97', '#F59E0B', '#10B981'];
 
 export default function MonthlyBudget() {
   return (
-    <div className="bg-white rounded-3xl border border-slate-100 shadow-sm overflow-hidden mt-6 p-6">
+    <div className="bg-white rounded-3xl border border-slate-100 shadow-sm overflow-hidden p-6">
       <h2 className="font-bold text-slate-800 text-lg mb-4">Monthly Budget Overview</h2>
       <div className="h-64">
         <ResponsiveContainer width="100%" height="100%">
